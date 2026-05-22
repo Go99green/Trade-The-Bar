@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import TopoLines from "@/components/TopoLines";
 
 // ── Change this to your launch date ──────────────────────────────
 const LAUNCH_DATE = new Date("2026-07-01T00:00:00");
@@ -27,142 +28,326 @@ export default function CountdownPage() {
     return () => clearInterval(id);
   }, []);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
+
+    const url =
+      "https://mypixieset.us5.list-manage.com/subscribe/post?u=3876823738c83626d889f7861&id=9e139e45d8&f_id=001c88e9f0";
+
+    const script = document.createElement("script");
+    const callbackName = `mc_callback_${Date.now()}`;
+    const params = new URLSearchParams({ EMAIL: email, c: callbackName });
+
+    (window as Record<string, unknown>)[callbackName] = () => {
+      delete (window as Record<string, unknown>)[callbackName];
+      document.body.removeChild(script);
+    };
+
+    script.src = url.replace("/post?", "/post-json?") + "&" + params.toString();
+    document.body.appendChild(script);
     setSubmitted(true);
   }
 
   return (
-    <div className="min-h-screen bg-ink flex flex-col items-center justify-center px-5 relative overflow-hidden">
-      {/* Subtle grain texture */}
-      <div
-        className="absolute inset-0 opacity-[0.025] pointer-events-none"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, #EFE9DD 2px, #EFE9DD 3px)",
-        }}
-      />
+    <div className="text-bone">
 
-      {/* Rust accent line top */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[3px]"
-        style={{
-          background:
-            "repeating-linear-gradient(90deg, #A8431F 0, #A8431F 32px, transparent 32px, transparent 40px)",
-        }}
-      />
+      {/* ── HERO COUNTDOWN ── */}
+      <section
+        className="min-h-screen flex flex-col items-center justify-center px-5 relative overflow-hidden"
+        style={{ backgroundColor: "#1A2B1C" }}
+      >
+        {/* Topography lines texture */}
+        <TopoLines strokeOpacity={0.07} strokeColor="#EFE9DD" />
 
-      <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center text-center gap-12">
+        {/* Subtle grain texture */}
+        <div
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, transparent, transparent 2px, #EFE9DD 2px, #EFE9DD 3px)",
+          }}
+        />
 
-        {/* Logo */}
-        <div className="flex flex-col items-center leading-none">
-          <span className="font-display text-[clamp(2.5rem,10vw,7rem)] tracking-[0.15em] uppercase text-bone leading-none">
-            Trade
-          </span>
-          <div
-            className="h-[5px] md:h-[7px] my-3 md:my-4"
-            style={{
-              width: "100%",
-              background:
-                "repeating-linear-gradient(90deg, #A8431F 0, #A8431F 20px, transparent 20px, transparent 26px)",
-            }}
-          />
-          <span className="font-display text-[clamp(2.5rem,10vw,7rem)] tracking-[0.15em] uppercase text-bone leading-none">
-            The Bar
-          </span>
-        </div>
+        {/* Top rust accent bar */}
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-rust" />
 
-        {/* Tagline */}
-        <p className="text-bone/40 text-sm md:text-base font-sans tracking-widest uppercase">
-          For athletes who traded one obsession for another.
-        </p>
+        <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center text-center gap-10">
 
-        {/* Countdown */}
-        <div className="grid grid-cols-4 gap-4 md:gap-8 w-full">
-          {[
-            { label: "Days", value: time.days },
-            { label: "Hours", value: time.hours },
-            { label: "Mins", value: time.minutes },
-            { label: "Secs", value: time.seconds },
-          ].map(({ label, value }) => (
-            <div key={label} className="flex flex-col items-center gap-2">
-              <span className="font-display text-[clamp(2.5rem,8vw,6rem)] text-bone leading-none tabular-nums">
-                {String(value).padStart(2, "0")}
-              </span>
-              <span className="text-bone/30 text-[10px] tracking-[0.3em] uppercase font-sans">
-                {label}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Divider */}
-        <div className="flex items-center gap-4 w-full">
-          <div className="flex-1 h-[1px] bg-bone/10" />
-          <span className="text-bone/20 text-[10px] tracking-widest uppercase font-sans whitespace-nowrap">
-            Drop incoming
-          </span>
-          <div className="flex-1 h-[1px] bg-bone/10" />
-        </div>
-
-        {/* Email form */}
-        {!submitted ? (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-0 w-full max-w-md"
-          >
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              className="flex-1 bg-bone/10 border border-bone/20 px-5 py-4 text-bone placeholder:text-bone/25 text-sm font-sans focus:outline-none focus:border-rust transition-colors"
-            />
-            <button
-              type="submit"
-              className="bg-rust hover:bg-rust-dark transition-colors text-bone px-8 py-4 text-xs tracking-widest uppercase font-sans font-semibold whitespace-nowrap"
-            >
-              Notify Me
-            </button>
-          </form>
-        ) : (
-          <div className="flex flex-col items-center gap-3">
-            <div className="flex items-center gap-3">
-              <span
-                className="inline-block h-[1px] w-8"
-                style={{
-                  background:
-                    "repeating-linear-gradient(90deg, #7A8B6E 0, #7A8B6E 3px, transparent 3px, transparent 6px)",
-                }}
-              />
-              <span className="text-sage text-xs tracking-widest uppercase font-sans">
-                You&apos;re on the list
-              </span>
-              <span
-                className="inline-block h-[1px] w-8"
-                style={{
-                  background:
-                    "repeating-linear-gradient(90deg, #7A8B6E 0, #7A8B6E 3px, transparent 3px, transparent 6px)",
-                }}
-              />
-            </div>
-            <p className="text-bone/30 text-xs font-sans">
-              We&apos;ll hit you when we drop.
-            </p>
+          {/* Logo */}
+          <div className="flex flex-col items-center leading-none">
+            <span className="font-display text-[clamp(2.5rem,10vw,7rem)] tracking-[0.15em] uppercase text-bone leading-none">
+              Trade
+            </span>
+            <div className="h-[2px] my-3 md:my-4 w-full bg-rust" />
+            <span className="font-display text-[clamp(2.5rem,10vw,7rem)] tracking-[0.15em] uppercase text-bone leading-none">
+              The Bar
+            </span>
           </div>
-        )}
-      </div>
 
-      {/* Bottom rust line */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[3px]"
-        style={{
-          background:
-            "repeating-linear-gradient(90deg, #A8431F 0, #A8431F 32px, transparent 32px, transparent 40px)",
-        }}
-      />
+          {/* Tagline */}
+          <p className="text-bone/40 text-sm md:text-base font-sans tracking-widest uppercase">
+            For athletes who traded one obsession for another.
+          </p>
+
+          {/* Countdown */}
+          <div className="grid grid-cols-4 gap-4 md:gap-8 w-full">
+            {[
+              { label: "Days", value: time.days },
+              { label: "Hours", value: time.hours },
+              { label: "Mins", value: time.minutes },
+              { label: "Secs", value: time.seconds },
+            ].map(({ label, value }) => (
+              <div key={label} className="flex flex-col items-center gap-2">
+                <span className="font-display text-[clamp(2.5rem,8vw,6rem)] text-bone leading-none tabular-nums">
+                  {String(value).padStart(2, "0")}
+                </span>
+                <span className="text-bone/30 text-[10px] tracking-[0.3em] uppercase font-sans">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 w-full">
+            <div className="flex-1 h-[1px] bg-bone/10" />
+            <span className="text-bone/20 text-[10px] tracking-widest uppercase font-sans whitespace-nowrap">
+              Drop incoming
+            </span>
+            <div className="flex-1 h-[1px] bg-bone/10" />
+          </div>
+
+          {/* Email form */}
+          {!submitted ? (
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-0 w-full max-w-md"
+            >
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="flex-1 bg-bone/10 border border-bone/20 px-5 py-4 text-bone placeholder:text-bone/25 text-sm font-sans focus:outline-none focus:border-rust transition-colors"
+              />
+              <input
+                type="text"
+                name="b_3876823738c83626d889f7861_9e139e45d8"
+                tabIndex={-1}
+                defaultValue=""
+                style={{ position: "absolute", left: "-5000px" }}
+                aria-hidden="true"
+              />
+              <button
+                type="submit"
+                className="bg-rust hover:bg-rust-dark transition-colors text-bone px-8 py-4 text-xs tracking-widest uppercase font-sans font-semibold whitespace-nowrap"
+              >
+                Notify Me
+              </button>
+            </form>
+          ) : (
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex items-center gap-3">
+                <span className="inline-block h-[1px] w-8 bg-sage" />
+                <span className="text-sage text-xs tracking-widest uppercase font-sans">
+                  You&apos;re on the list
+                </span>
+                <span className="inline-block h-[1px] w-8 bg-sage" />
+              </div>
+              <p className="text-bone/30 text-xs font-sans">
+                We&apos;ll hit you when we drop.
+              </p>
+            </div>
+          )}
+
+          {/* Scroll nudge */}
+          <div className="flex flex-col items-center gap-2 opacity-20 pt-4">
+            <span className="text-bone text-[10px] tracking-widest uppercase font-sans">Our Story</span>
+            <div className="w-[1px] h-6 bg-bone animate-pulse" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOUNDER STORY ── */}
+      <section className="bg-bone text-ink px-5 md:px-10 py-20 md:py-28">
+        <div className="max-w-4xl mx-auto">
+          {/* Section label */}
+          <div className="flex items-center gap-3 mb-10">
+            <span className="inline-block w-6 h-[1px] bg-rust" />
+            <span className="text-rust text-[11px] tracking-[0.3em] uppercase font-sans">
+              Founded by Keegan Holt
+            </span>
+          </div>
+
+          <h2 className="font-display text-4xl md:text-6xl uppercase tracking-tight leading-none mb-10">
+            I Traded<br />The Bar.
+          </h2>
+
+          <div className="max-w-2xl space-y-6">
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              I&apos;m an Army veteran, a CrossFit coach, a husband, an MBA student, and someone who had to get honest about alcohol.
+            </p>
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              For a while, drinking looked normal enough from the outside. I could still train. I could still coach. I could still tell myself I had it handled.
+            </p>
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              But I didn&apos;t.
+            </p>
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              At times, it was dramatic. I lost a job. I almost lost my wife. I was losing my fitness, my direction, and the sense of purpose I had worked so hard to build after the Army. Alcohol was not just taking my nights. It was starting to take the person I wanted to be.
+            </p>
+
+            <blockquote className="border-l-2 border-rust pl-6 py-3">
+              <p className="font-serif italic text-xl text-ink leading-snug">
+                &ldquo;So I traded the bar.&rdquo;
+              </p>
+            </blockquote>
+
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              I traded the drinks, the excuses, the wasted mornings, and the version of myself that kept pretending things were fine. I traded all of that for the gym, for discipline, for better habits, and for the chance to earn back trust in myself one day at a time.
+            </p>
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              The gym did not magically fix everything. But it gave me a place to rebuild. It gave me somewhere to put the stress, the anger, the anxiety, and the restlessness. It gave me structure when I needed structure. It reminded me that progress does not happen through one heroic decision. It happens through small choices repeated every day.
+            </p>
+            <p className="font-sans text-charcoal text-base leading-relaxed">
+              When I got sober, my training changed. My coaching changed. My marriage changed. My schoolwork changed. I started showing up differently in every part of my life.
+            </p>
+
+            <div className="border-t border-ink/10 pt-6">
+              <p className="font-sans text-charcoal text-base leading-relaxed font-medium">
+                That is why Trade The Bar exists.
+              </p>
+              <p className="font-sans text-charcoal text-base leading-relaxed mt-4">
+                This brand is for the people who know alcohol is taking more from them than they want to admit. It is for the people who are tired of waking up disappointed in themselves. It is for anyone ready to trade the bottle for the barbell, the hangover for the morning workout, and the old version of themselves for someone they can respect again.
+              </p>
+              <p className="font-sans text-charcoal text-base leading-relaxed mt-4">
+                I traded the bar because I was losing too much. Now I want to help other people make that same trade before alcohol takes any more from them.
+              </p>
+            </div>
+
+            <div className="pt-4">
+              <p className="font-sans text-charcoal/50 text-xs tracking-widest uppercase">
+                — Keegan Holt
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHAT WE STAND FOR ── */}
+      <section className="relative px-5 md:px-10 py-20 md:py-28 overflow-hidden" style={{ backgroundColor: "#2D5236" }}>
+        <TopoLines strokeOpacity={0.08} strokeColor="#EFE9DD" />
+        <div className="relative max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-10">
+            <span className="inline-block w-6 h-[1px] bg-rust" />
+            <span className="text-rust text-[11px] tracking-[0.3em] uppercase font-sans">
+              What We Stand For
+            </span>
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tight text-bone mb-14">
+            Built at the<br />overlap.
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                title: "Veteran Owned",
+                body: "Built by someone who served. The discipline, the brotherhood, the struggle — it informs everything about how this brand operates.",
+              },
+              {
+                title: "Sober Founded",
+                body: "Not a recovery brand with a barbell glued on. The sobriety is real. The training is real. The overlap is where this brand lives.",
+              },
+              {
+                title: "The Trade",
+                body: "Alcohol for the gym. The bar for the barbell. One ritual for another. This gear is for the people who made that trade and never looked back.",
+              },
+              {
+                title: "No Performance",
+                body: "No inspiration porn. No toxic positivity. Just honest gear for honest people doing the work in both rooms.",
+              },
+            ].map(({ title, body }) => (
+              <div
+                key={title}
+                className="border border-bone/10 p-8 hover:border-rust/50 transition-colors"
+                style={{ backgroundColor: "rgba(26,43,28,0.5)" }}
+              >
+                <h3 className="font-display text-xl uppercase tracking-tight text-bone mb-3">
+                  {title}
+                </h3>
+                <p className="font-sans text-bone/55 text-sm leading-relaxed">{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── WARRIORS HEART ── */}
+      <section className="bg-rust px-5 md:px-10 py-20 md:py-24">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-bone/60 text-[11px] tracking-[0.3em] uppercase font-sans mb-4">
+              Giving Back
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tight text-bone leading-none mb-6">
+              10% Goes to<br />Warriors Heart.
+            </h2>
+            <p className="font-sans text-bone/80 text-base leading-relaxed">
+              Warriors Heart is the only private treatment program in the US exclusively for warriors — active military, veterans, and first responders battling addiction and PTSD. They treat the people who protected us when nobody else will.
+            </p>
+            <p className="font-sans text-bone/80 text-base leading-relaxed mt-4">
+              Ten percent of every TTB purchase goes directly to Warriors Heart. Not a charity play. Not marketing. The community this brand is built for deserves real support.
+            </p>
+            <a
+              href="https://www.warriorsheart.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-8 text-bone border border-bone/40 hover:border-bone px-6 py-3 text-xs tracking-widest uppercase font-sans transition-colors"
+            >
+              Learn about Warriors Heart
+              <span className="inline-block w-4 h-[1px] bg-bone" />
+            </a>
+          </div>
+
+          <div className="space-y-6">
+            {[
+              {
+                stat: "Warriors Only",
+                desc: "The only private U.S. program exclusively for active military, veterans & first responders.",
+              },
+              {
+                stat: "Addiction + PTSD",
+                desc: "Treating the full picture — chemical dependency alongside the psychological wounds of service.",
+              },
+              {
+                stat: "10% of Every Sale",
+                desc: "Built into the business from day one. Not a campaign. A commitment.",
+              },
+            ].map(({ stat, desc }) => (
+              <div key={stat} className="border-t border-bone/20 pt-5">
+                <p className="font-display text-lg uppercase text-bone tracking-tight mb-1">
+                  {stat}
+                </p>
+                <p className="font-sans text-bone/60 text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── BOTTOM SIGN OFF ── */}
+      <section
+        className="relative px-5 py-14 text-center border-t border-bone/5 overflow-hidden"
+        style={{ backgroundColor: "#1A2B1C" }}
+      >
+        <TopoLines strokeOpacity={0.05} strokeColor="#EFE9DD" />
+        <p className="relative font-display text-xl md:text-2xl uppercase text-bone/20 tracking-widest">
+          July 1, 2026 — The Drop
+        </p>
+      </section>
+
     </div>
   );
 }

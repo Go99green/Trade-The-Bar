@@ -35,17 +35,11 @@ export default function Footer() {
         {/* Brand */}
         <div className="col-span-2 md:col-span-1">
           <div className="flex flex-col items-start leading-none mb-4">
-            <span className="font-display text-[10px] tracking-[0.25em] uppercase text-bone">
+            <span className="font-display text-[10px] tracking-[0.25em] uppercase text-bone leading-tight">
               Trade
             </span>
-            <span
-              className="block w-full h-[2px] my-[3px]"
-              style={{
-                background:
-                  "repeating-linear-gradient(90deg, #A8431F 0, #A8431F 6px, transparent 6px, transparent 9px)",
-              }}
-            />
-            <span className="font-display text-[10px] tracking-[0.25em] uppercase text-bone">
+            <span className="block w-full h-[1px] my-[3px] bg-rust" />
+            <span className="font-display text-[10px] tracking-[0.25em] uppercase text-bone leading-tight">
               The Bar
             </span>
           </div>
@@ -99,24 +93,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Social */}
-        <div>
-          <p className="text-bone/30 text-[10px] tracking-widest uppercase font-sans mb-4">
-            Follow
-          </p>
-          <ul className="space-y-2">
-            {["Instagram", "TikTok", "YouTube"].map((platform) => (
-              <li key={platform}>
-                <a
-                  href="#"
-                  className="text-bone/60 hover:text-rust text-sm font-sans transition-colors"
-                >
-                  {platform}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
 
       {/* Bottom bar */}
