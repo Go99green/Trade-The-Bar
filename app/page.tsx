@@ -18,6 +18,18 @@ function getTimeLeft() {
   };
 }
 
+// Tiny corner targeting mark component
+function CornerMarks({ color = "border-rust/40" }: { color?: string }) {
+  return (
+    <>
+      <span className={`absolute top-0 left-0 w-2.5 h-2.5 border-t border-l ${color}`} />
+      <span className={`absolute top-0 right-0 w-2.5 h-2.5 border-t border-r ${color}`} />
+      <span className={`absolute bottom-0 left-0 w-2.5 h-2.5 border-b border-l ${color}`} />
+      <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 border-b border-r ${color}`} />
+    </>
+  );
+}
+
 export default function CountdownPage() {
   const [time, setTime] = useState(getTimeLeft());
   const [email, setEmail] = useState("");
@@ -55,22 +67,24 @@ export default function CountdownPage() {
       {/* ── HERO COUNTDOWN ── */}
       <section
         className="min-h-screen flex flex-col items-center justify-center px-5 relative overflow-hidden"
-        style={{ backgroundColor: "#1A2B1C" }}
+        style={{ backgroundColor: "#1C2416" }}
       >
-        {/* Topography lines texture */}
-        <TopoLines strokeOpacity={0.07} strokeColor="#EFE9DD" />
-
-        {/* Subtle grain texture */}
-        <div
-          className="absolute inset-0 opacity-[0.02] pointer-events-none"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, transparent, transparent 2px, #EFE9DD 2px, #EFE9DD 3px)",
-          }}
-        />
+        {/* Topo lines — dense concentric rings */}
+        <TopoLines strokeOpacity={0.10} strokeColor="#EFE9DD" showGrid gridOpacity={0.018} />
 
         {/* Top rust accent bar */}
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-rust" />
+
+        {/* Coordinate display — top right tactical chrome */}
+        <div className="absolute top-5 right-5 text-right opacity-25 select-none">
+          <p className="text-bone text-[9px] font-mono tracking-widest">32°42′N · 117°09′W</p>
+          <p className="text-bone/60 text-[8px] font-mono tracking-wider mt-0.5">GRID 11S MS · ALT 1,562</p>
+        </div>
+
+        {/* Bottom-left grid ref */}
+        <div className="absolute bottom-5 left-5 opacity-20 select-none">
+          <p className="text-bone text-[8px] font-mono tracking-widest">TTB · FIELD OP · 01 JUL 26</p>
+        </div>
 
         <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center text-center gap-10">
 
@@ -86,23 +100,34 @@ export default function CountdownPage() {
           </div>
 
           {/* Tagline */}
-          <p className="text-bone/40 text-sm md:text-base font-sans tracking-widest uppercase">
+          <p className="text-bone/35 text-sm md:text-base font-sans tracking-widest uppercase">
             For athletes who traded one obsession for another.
           </p>
 
-          {/* Countdown */}
-          <div className="grid grid-cols-4 gap-4 md:gap-8 w-full">
+          {/* Mission clock label */}
+          <div className="flex items-center gap-3 -mb-4">
+            <span className="inline-block h-[1px] w-8 bg-rust/40" />
+            <span className="text-bone/20 text-[9px] font-mono tracking-[0.4em] uppercase">Mission Clock</span>
+            <span className="inline-block h-[1px] w-8 bg-rust/40" />
+          </div>
+
+          {/* Countdown — tactical instrument tiles */}
+          <div className="grid grid-cols-4 gap-3 md:gap-6 w-full">
             {[
               { label: "Days", value: time.days },
               { label: "Hours", value: time.hours },
               { label: "Mins", value: time.minutes },
               { label: "Secs", value: time.seconds },
             ].map(({ label, value }) => (
-              <div key={label} className="flex flex-col items-center gap-2">
+              <div
+                key={label}
+                className="relative flex flex-col items-center gap-2 border border-bone/[0.07] px-2 py-4"
+              >
+                <CornerMarks color="border-rust/35" />
                 <span className="font-display text-[clamp(2.5rem,8vw,6rem)] text-bone leading-none tabular-nums">
                   {String(value).padStart(2, "0")}
                 </span>
-                <span className="text-bone/30 text-[10px] tracking-[0.3em] uppercase font-sans">
+                <span className="text-bone/25 text-[9px] tracking-[0.35em] uppercase font-mono">
                   {label}
                 </span>
               </div>
@@ -112,7 +137,7 @@ export default function CountdownPage() {
           {/* Divider */}
           <div className="flex items-center gap-4 w-full">
             <div className="flex-1 h-[1px] bg-bone/10" />
-            <span className="text-bone/20 text-[10px] tracking-widest uppercase font-sans whitespace-nowrap">
+            <span className="text-bone/20 text-[10px] tracking-widest uppercase font-mono whitespace-nowrap">
               Drop incoming
             </span>
             <div className="flex-1 h-[1px] bg-bone/10" />
@@ -130,7 +155,7 @@ export default function CountdownPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="flex-1 bg-bone/10 border border-bone/20 px-5 py-4 text-bone placeholder:text-bone/25 text-sm font-sans focus:outline-none focus:border-rust transition-colors"
+                className="flex-1 bg-bone/[0.07] border border-bone/20 px-5 py-4 text-bone placeholder:text-bone/25 text-sm font-sans focus:outline-none focus:border-rust transition-colors"
               />
               <input
                 type="text"
@@ -151,12 +176,12 @@ export default function CountdownPage() {
             <div className="flex flex-col items-center gap-3">
               <div className="flex items-center gap-3">
                 <span className="inline-block h-[1px] w-8 bg-sage" />
-                <span className="text-sage text-xs tracking-widest uppercase font-sans">
+                <span className="text-sage text-xs tracking-widest uppercase font-mono">
                   You&apos;re on the list
                 </span>
                 <span className="inline-block h-[1px] w-8 bg-sage" />
               </div>
-              <p className="text-bone/30 text-xs font-sans">
+              <p className="text-bone/30 text-xs font-mono">
                 We&apos;ll hit you when we drop.
               </p>
             </div>
@@ -164,7 +189,7 @@ export default function CountdownPage() {
 
           {/* Scroll nudge */}
           <div className="flex flex-col items-center gap-2 opacity-20 pt-4">
-            <span className="text-bone text-[10px] tracking-widest uppercase font-sans">Our Story</span>
+            <span className="text-bone text-[9px] tracking-widest uppercase font-mono">Our Story</span>
             <div className="w-[1px] h-6 bg-bone animate-pulse" />
           </div>
         </div>
@@ -176,7 +201,7 @@ export default function CountdownPage() {
           {/* Section label */}
           <div className="flex items-center gap-3 mb-10">
             <span className="inline-block w-6 h-[1px] bg-rust" />
-            <span className="text-rust text-[11px] tracking-[0.3em] uppercase font-sans">
+            <span className="text-rust text-[11px] tracking-[0.3em] uppercase font-mono">
               Founded by Keegan Holt
             </span>
           </div>
@@ -228,7 +253,7 @@ export default function CountdownPage() {
             </div>
 
             <div className="pt-4">
-              <p className="font-sans text-charcoal/50 text-xs tracking-widest uppercase">
+              <p className="font-mono text-charcoal/40 text-[10px] tracking-widest uppercase">
                 — Keegan Holt
               </p>
             </div>
@@ -237,12 +262,15 @@ export default function CountdownPage() {
       </section>
 
       {/* ── WHAT WE STAND FOR ── */}
-      <section className="relative px-5 md:px-10 py-20 md:py-28 overflow-hidden" style={{ backgroundColor: "#2D5236" }}>
-        <TopoLines strokeOpacity={0.08} strokeColor="#EFE9DD" />
+      <section
+        className="relative px-5 md:px-10 py-20 md:py-28 overflow-hidden"
+        style={{ backgroundColor: "#3D4A20" }}
+      >
+        <TopoLines strokeOpacity={0.09} strokeColor="#EFE9DD" />
         <div className="relative max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-10">
             <span className="inline-block w-6 h-[1px] bg-rust" />
-            <span className="text-rust text-[11px] tracking-[0.3em] uppercase font-sans">
+            <span className="text-rust text-[11px] tracking-[0.3em] uppercase font-mono">
               What We Stand For
             </span>
           </div>
@@ -255,29 +283,38 @@ export default function CountdownPage() {
               {
                 title: "Veteran Owned",
                 body: "Built by someone who served. The discipline, the brotherhood, the struggle — it informs everything about how this brand operates.",
+                ref: "A1",
               },
               {
                 title: "Sober Founded",
                 body: "Not a recovery brand with a barbell glued on. The sobriety is real. The training is real. The overlap is where this brand lives.",
+                ref: "A2",
               },
               {
                 title: "The Trade",
                 body: "Alcohol for the gym. The bar for the barbell. One ritual for another. This gear is for the people who made that trade and never looked back.",
+                ref: "B1",
               },
               {
                 title: "No Performance",
                 body: "No inspiration porn. No toxic positivity. Just honest gear for honest people doing the work in both rooms.",
+                ref: "B2",
               },
-            ].map(({ title, body }) => (
+            ].map(({ title, body, ref }) => (
               <div
                 key={title}
-                className="border border-bone/10 p-8 hover:border-rust/50 transition-colors"
-                style={{ backgroundColor: "rgba(26,43,28,0.5)" }}
+                className="relative border border-bone/10 p-8 hover:border-rust/50 transition-colors"
+                style={{ backgroundColor: "rgba(28,36,22,0.55)" }}
               >
+                <CornerMarks color="border-bone/20" />
+                {/* Grid reference */}
+                <span className="absolute top-2.5 right-3 text-bone/15 font-mono text-[8px] tracking-wider">
+                  {ref}
+                </span>
                 <h3 className="font-display text-xl uppercase tracking-tight text-bone mb-3">
                   {title}
                 </h3>
-                <p className="font-sans text-bone/55 text-sm leading-relaxed">{body}</p>
+                <p className="font-sans text-bone/50 text-sm leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -288,7 +325,7 @@ export default function CountdownPage() {
       <section className="bg-rust px-5 md:px-10 py-20 md:py-24">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <p className="text-bone/60 text-[11px] tracking-[0.3em] uppercase font-sans mb-4">
+            <p className="text-bone/60 text-[11px] tracking-[0.3em] uppercase font-mono mb-4">
               Giving Back
             </p>
             <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tight text-bone leading-none mb-6">
@@ -304,7 +341,7 @@ export default function CountdownPage() {
               href="https://www.warriorsheart.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-8 text-bone border border-bone/40 hover:border-bone px-6 py-3 text-xs tracking-widest uppercase font-sans transition-colors"
+              className="inline-flex items-center gap-2 mt-8 text-bone border border-bone/40 hover:border-bone px-6 py-3 text-xs tracking-widest uppercase font-mono transition-colors"
             >
               Learn about Warriors Heart
               <span className="inline-block w-4 h-[1px] bg-bone" />
@@ -340,11 +377,14 @@ export default function CountdownPage() {
       {/* ── BOTTOM SIGN OFF ── */}
       <section
         className="relative px-5 py-14 text-center border-t border-bone/5 overflow-hidden"
-        style={{ backgroundColor: "#1A2B1C" }}
+        style={{ backgroundColor: "#1C2416" }}
       >
-        <TopoLines strokeOpacity={0.05} strokeColor="#EFE9DD" />
+        <TopoLines strokeOpacity={0.06} strokeColor="#EFE9DD" />
         <p className="relative font-display text-xl md:text-2xl uppercase text-bone/20 tracking-widest">
           July 1, 2026 — The Drop
+        </p>
+        <p className="relative font-mono text-bone/10 text-[9px] tracking-widest uppercase mt-2">
+          32°42′N · 117°09′W · TRADETHEBAR.ORG
         </p>
       </section>
 
