@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const LAUNCH_DATE = new Date("2026-07-01T00:00:00");
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const launched = Date.now() >= LAUNCH_DATE.getTime();
 
   if (launched) return NextResponse.next();
