@@ -51,8 +51,8 @@ export default function CountdownPage() {
     const callbackName = `mc_callback_${Date.now()}`;
     const params = new URLSearchParams({ EMAIL: email, c: callbackName });
 
-    (window as Record<string, unknown>)[callbackName] = () => {
-      delete (window as Record<string, unknown>)[callbackName];
+    (window as unknown as Record<string, unknown>)[callbackName] = () => {
+      delete (window as unknown as Record<string, unknown>)[callbackName];
       document.body.removeChild(script);
     };
 
