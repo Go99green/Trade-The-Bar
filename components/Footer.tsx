@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Footer() {
   return (
     <footer className="bg-ink text-bone">
@@ -31,7 +29,7 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-5 md:px-10 py-12 grid grid-cols-2 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 py-12 grid grid-cols-2 md:grid-cols-3 gap-10">
         {/* Brand */}
         <div className="col-span-2 md:col-span-1">
           <div className="flex flex-col items-start leading-none mb-4">
@@ -48,70 +46,32 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Shop */}
+        {/* Follow */}
         <div>
           <p className="text-bone/30 text-[10px] tracking-widest uppercase font-sans mb-4">
-            Shop
+            Follow
           </p>
           <ul className="space-y-2">
-            {["Tees", "Hoodies", "Hats", "Accessories", "All Products"].map(
-              (item) => (
-                <li key={item}>
-                  <Link
-                    href="/shop"
-                    className="text-bone/60 hover:text-bone text-sm font-sans transition-colors"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              )
-            )}
+            <li>
+              <a
+                href="https://instagram.com/tradethebar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-bone/60 hover:text-bone text-sm font-sans transition-colors"
+              >
+                Instagram
+              </a>
+            </li>
           </ul>
         </div>
-
-        {/* Company */}
-        <div>
-          <p className="text-bone/30 text-[10px] tracking-widest uppercase font-sans mb-4">
-            Company
-          </p>
-          <ul className="space-y-2">
-            {[
-              { label: "Our Story", href: "/story" },
-              { label: "Journal", href: "/journal" },
-              { label: "Contact", href: "/contact" },
-              { label: "Wholesale", href: "/contact" },
-            ].map(({ label, href }) => (
-              <li key={label}>
-                <Link
-                  href={href}
-                  className="text-bone/60 hover:text-bone text-sm font-sans transition-colors"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
       </div>
 
       {/* Bottom bar */}
       <div className="border-t border-bone/10 px-5 md:px-10 py-5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+        <div className="max-w-7xl mx-auto">
           <p className="text-bone/30 text-xs font-sans">
-            © {new Date().getFullYear()} Trade The Bar. All rights reserved.
+            © 2026 Trade The Bar. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            {["Privacy Policy", "Terms", "Returns"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-bone/30 hover:text-bone/60 text-xs font-sans transition-colors"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

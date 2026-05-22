@@ -21,14 +21,23 @@ const lora = Lora({
   style: ["normal", "italic"],
 });
 
+const META_DESC =
+  "Apparel for athletes who traded one obsession for another. Veteran owned. Sober founded. First drop July 1, 2026.";
+const META_TITLE = "Trade The Bar | Veteran Owned Sober Apparel";
+
 export const metadata: Metadata = {
-  title: "Trade The Bar — Apparel for Athletes in Recovery",
-  description:
-    "Built for athletes who walked out of one room and into another. The barbell is the new ritual. The gym is the new meeting.",
+  title: META_TITLE,
+  description: META_DESC,
   openGraph: {
-    title: "Trade The Bar",
-    description: "For athletes who traded one obsession for another.",
+    title: META_TITLE,
+    description: META_DESC,
     siteName: "Trade The Bar",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: META_TITLE,
+    description: META_DESC,
   },
 };
 

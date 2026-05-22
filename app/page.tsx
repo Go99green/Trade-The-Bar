@@ -187,6 +187,11 @@ export default function CountdownPage() {
             </div>
           )}
 
+          {/* Microcopy */}
+          <p className="text-bone/25 text-[11px] font-mono tracking-wider text-center -mt-4">
+            First drop July 1. Subscribers get early access.
+          </p>
+
           {/* Scroll nudge */}
           <div className="flex flex-col items-center gap-2 opacity-20 pt-4">
             <span className="text-bone text-[9px] tracking-widest uppercase font-mono">Our Story</span>
@@ -221,7 +226,7 @@ export default function CountdownPage() {
               But I didn&apos;t.
             </p>
             <p className="font-sans text-charcoal text-base leading-relaxed">
-              At times, it was dramatic. I lost a job. I almost lost my wife. I was losing my fitness, my direction, and the sense of purpose I had worked so hard to build after the Army. Alcohol was not just taking my nights. It was starting to take the person I wanted to be.
+              At times, it was dramatic. I lost a job. My marriage was falling apart. I was losing my fitness, my direction, and the sense of purpose I had worked so hard to build after the Army. Alcohol was not just taking my nights. It was starting to take the person I wanted to be.
             </p>
 
             <blockquote className="border-l-2 border-rust pl-6 py-3">
@@ -292,7 +297,7 @@ export default function CountdownPage() {
               },
               {
                 title: "The Trade",
-                body: "Alcohol for the gym. The bar for the barbell. One ritual for another. This gear is for the people who made that trade and never looked back.",
+                body: "Alcohol for the gym. The bar for the barbell. One ritual for another. This gear is for the people who made that trade and keep making it.",
                 ref: "B1",
               },
               {
@@ -321,7 +326,7 @@ export default function CountdownPage() {
         </div>
       </section>
 
-      {/* ── WARRIORS HEART ── */}
+      {/* ── GIVING BACK ── */}
       <section className="bg-rust px-5 md:px-10 py-20 md:py-24">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
@@ -329,38 +334,29 @@ export default function CountdownPage() {
               Giving Back
             </p>
             <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tight text-bone leading-none mb-6">
-              10% Goes to<br />Warriors Heart.
+              Built to<br />Give Back.
             </h2>
             <p className="font-sans text-bone/80 text-base leading-relaxed">
-              Warriors Heart is the only private treatment program in the US exclusively for warriors — active military, veterans, and first responders battling addiction and PTSD. They treat the people who protected us when nobody else will.
+              Ten percent of our profits go to organizations supporting veterans and first responders in recovery from addiction and PTSD. The community this brand is built for deserves real support.
             </p>
             <p className="font-sans text-bone/80 text-base leading-relaxed mt-4">
-              Ten percent of every TTB purchase goes directly to Warriors Heart. Not a charity play. Not marketing. The community this brand is built for deserves real support.
+              Not a campaign. A commitment. Built into the business from day one.
             </p>
-            <a
-              href="https://www.warriorsheart.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-8 text-bone border border-bone/40 hover:border-bone px-6 py-3 text-xs tracking-widest uppercase font-mono transition-colors"
-            >
-              Learn about Warriors Heart
-              <span className="inline-block w-4 h-[1px] bg-bone" />
-            </a>
           </div>
 
           <div className="space-y-6">
             {[
               {
-                stat: "Warriors Only",
-                desc: "The only private U.S. program exclusively for active military, veterans & first responders.",
+                stat: "Veterans and Responders",
+                desc: "The people this brand is built for. Those who served, those who still serve.",
               },
               {
-                stat: "Addiction + PTSD",
-                desc: "Treating the full picture — chemical dependency alongside the psychological wounds of service.",
+                stat: "Addiction and PTSD",
+                desc: "The two fights that often travel together. Both deserve real support.",
               },
               {
-                stat: "10% of Every Sale",
-                desc: "Built into the business from day one. Not a campaign. A commitment.",
+                stat: "Profit, Not Marketing",
+                desc: "Tied to the bottom line, not the campaign. It happens whether anyone is watching.",
               },
             ].map(({ stat, desc }) => (
               <div key={stat} className="border-t border-bone/20 pt-5">
