@@ -1,33 +1,6 @@
 export default function Footer() {
   return (
     <footer className="bg-ink text-bone">
-      {/* Newsletter */}
-      <div className="border-b border-bone/10 py-14 px-5 md:px-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <div>
-            <p className="font-display text-2xl md:text-3xl tracking-widest uppercase text-bone">
-              Stay in it.
-            </p>
-            <p className="text-bone/50 text-sm mt-2 font-sans">
-              New drops, journal entries, and nothing else.
-            </p>
-          </div>
-          <form className="flex gap-0 w-full md:w-auto max-w-md">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="flex-1 bg-bone/10 border border-bone/20 px-4 py-3 text-bone placeholder:text-bone/30 text-sm font-sans focus:outline-none focus:border-rust"
-            />
-            <button
-              type="submit"
-              className="bg-rust hover:bg-rust-dark transition-colors px-6 py-3 text-bone text-xs tracking-widest uppercase font-sans font-semibold whitespace-nowrap"
-            >
-              Sign Up
-            </button>
-          </form>
-        </div>
-      </div>
-
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-5 md:px-10 py-12 grid grid-cols-2 md:grid-cols-3 gap-10">
         {/* Brand */}

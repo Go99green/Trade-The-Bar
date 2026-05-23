@@ -193,15 +193,19 @@ export default function CountdownPage() {
           </p>
 
           {/* Scroll nudge */}
-          <div className="flex flex-col items-center gap-2 opacity-20 pt-4">
+          <a
+            href="#story"
+            className="flex flex-col items-center gap-2 opacity-20 pt-4 hover:opacity-30 transition-opacity"
+            aria-label="Scroll to our story"
+          >
             <span className="text-bone text-[9px] tracking-widest uppercase font-mono">Our Story</span>
             <div className="w-[1px] h-6 bg-bone animate-pulse" />
-          </div>
+          </a>
         </div>
       </section>
 
       {/* ── FOUNDER STORY ── */}
-      <section className="bg-bone text-ink px-5 md:px-10 py-20 md:py-28">
+      <section id="story" className="bg-bone text-ink px-5 md:px-10 py-20 md:py-28">
         <div className="max-w-4xl mx-auto">
           {/* Section label */}
           <div className="flex items-center gap-3 mb-10">

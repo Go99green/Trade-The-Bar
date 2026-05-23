@@ -28,6 +28,10 @@ const META_TITLE = "Trade The Bar | Veteran Owned Sober Apparel";
 export const metadata: Metadata = {
   title: META_TITLE,
   description: META_DESC,
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: META_TITLE,
     description: META_DESC,
